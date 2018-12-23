@@ -34,14 +34,14 @@ for (var i=0; i < names.length; i++) {
 
 var cssId = 'bootstrap'
 if (!document.getElementById(cssId)) {
-    var head  = document.getElementsByTagName('head')[0];
-    var link  = document.createElement('link');
-    link.id   = cssId;
-    link.rel  = 'stylesheet';
-    link.type = 'text/css';
-    link.href = 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css';
-    link.media = 'all';
-    head.appendChild(link);
+  var head  = document.getElementsByTagName('head')[0]
+  var link  = document.createElement('link')
+  link.id   = cssId
+  link.rel  = 'stylesheet'
+  link.type = 'text/css'
+  link.href = 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css'
+  link.media = 'all'
+  head.appendChild(link)
 }
 
 var nav = document.getElementById('nav')
