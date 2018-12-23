@@ -18,9 +18,29 @@ function getNames () {
       var correctedName = (names.indexOf(name) > -1) ? name+'1' : name
       names.push(correctedName)
       units[k].setAttribute('id', makeId(correctedName))
+      var ul = units[k].querySelector('ul')
+      if (ul) {
+        ul.setAttribute('id', makeId(correctedName) + '_selection')
+        ul.setAttribute('class', 'collapse')
+        var button = createButton(correctedName)
+        ul.parentNode.insertBefore(button, ul)
+      } 
+
+      console.log(units[k].querySelector('ul'))
     }
   }
   return names
+}
+
+function createButton (correctedName) {
+  var button = document.createElement('a')
+  var linkText = document.createTextNode('+ weapon selection')
+  button.appendChild(linkText)
+  button.setAttribute('class', 'btn btn-primary btn-sm')
+  button.setAttribute('href', '#' + makeId(correctedName) + '_selection')
+  button.setAttribute('data-toggle', 'collapse')
+  button.setAttribute('role', 'button')
+  return button
 }
 
 function createNavContainer () {
@@ -40,7 +60,7 @@ function createLinks (names) {
     li.setAttribute('class','nav-item')
     var link = document.createElement('a')
     var linkText = document.createTextNode(names[i])
-    link.appendChild(linkText);
+    link.appendChild(linkText)
     link.setAttribute('href', '#' + makeId(names[i]))
     link.setAttribute('title', names[i])
     link.setAttribute('type', 'button')
