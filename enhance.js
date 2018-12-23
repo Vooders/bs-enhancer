@@ -1,10 +1,12 @@
 var categories = document.getElementsByClassName('category')
+var body = document.getElementsByClassName('battlescribe')[1]
 
 const names = getNames()
 createNavContainer()
 createLinks(names)
-addBootstrap()
+addDependencies()
 styleNavContainer()
+
 
 function getNames () {
   var names = []
@@ -24,28 +26,32 @@ function getNames () {
 function createNavContainer () {
   var div = document.createElement("div")
   div.id = 'nav'
-  document.getElementsByClassName('battlescribe')[1].appendChild(div)
+  body.appendChild(div)
 
   var ul = document.createElement("ul")
   ul.setAttribute('id','nav-list')
+  ul.setAttribute('class','nav flex-column')
   document.getElementById('nav').appendChild(ul)
 }
 
 function createLinks (names) {
   for (var i=0; i < names.length; i++) {
     var li = document.createElement("li")
+    li.setAttribute('class','nav-item')
     var link = document.createElement('a')
     var linkText = document.createTextNode(names[i])
     link.appendChild(linkText);
     link.setAttribute('href', '#' + makeId(names[i]))
     link.setAttribute('title', names[i])
-    link.setAttribute('class', 'btn')
+    link.setAttribute('type', 'button')
+    link.setAttribute('class', 'btn btn-warning')
+    link.style.fontSize = '0.8rem'
     li.appendChild(link)
     document.getElementById('nav-list').appendChild(link)
   }
 }
 
-function addBootstrap () {
+function addDependencies () {
   var cssId = 'bootstrap'
   if (!document.getElementById(cssId)) {
     var head  = document.getElementsByTagName('head')[0]
@@ -55,7 +61,20 @@ function addBootstrap () {
     link.type = 'text/css'
     link.href = 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css'
     link.media = 'all'
+
+    var jquery = document.createElement('script')
+    jquery.src = 'https://code.jquery.com/jquery-3.3.1.slim.min.js'
+
+    var popper = document.createElement('script')
+    popper.src = 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js'
+
+    var bootstrap = document.createElement('script')
+    bootstrap.src = 'https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js'
+
     head.appendChild(link)
+    body.appendChild(jquery)
+    body.appendChild(popper)
+    body.appendChild(bootstrap)
   }
 }
 
@@ -64,9 +83,12 @@ function styleNavContainer () {
   nav.style.position = 'fixed'
   nav.style.bottom = '0'
   nav.style.left = '0'
-  nav.style.width = '100%'
-  nav.style.height = '30px'
-  nav.style.backgroundColor = '#ccc'
+  nav.style.width = '40px'
+  nav.style.height = '100%'
+  nav.style.backgroundColor = 'white'
+
+  body.style.marginLeft = '180px'
+  body.style.marginRight = '0'
 }
 
 function makeId (name) {
