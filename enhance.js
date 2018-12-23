@@ -28,6 +28,7 @@ for (var i=0; i < names.length; i++) {
   link.appendChild(linkText);
   link.setAttribute('href', '#' + makeId(names[i]))
   link.setAttribute('title', names[i])
+  link.setAttribute('class', 'btn')
   console.log(link)
   li.appendChild(link)
   document.getElementById('nav-list').appendChild(link)
@@ -45,6 +46,14 @@ if (!document.getElementById(cssId))
     link.media = 'all';
     head.appendChild(link);
 }
+
+var nav = document.getElementById('nav')
+document.getElementById('nav').style.position = 'fixed'
+document.getElementById('nav').style.bottom = '0'
+document.getElementById('nav').style.left = '0'
+document.getElementById('nav').style.width = '100%'
+document.getElementById('nav').style.height = '30px'
+document.getElementById('nav').style.backgroundColor = '#ccc'
 
 function makeId (name) {
   return name.replace(/ /g, '_')
