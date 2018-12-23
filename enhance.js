@@ -17,14 +17,20 @@ var div = document.createElement("div")
 div.id = 'nav'
 document.getElementsByClassName('battlescribe')[1].appendChild(div)
 
+var ul = document.createElement("ul")
+ul.setAttribute('id','nav-list')
+document.getElementById('nav').appendChild(ul)
+
 for (var i=0; i < names.length; i++) {
+  var li = document.createElement("li")
   var link = document.createElement('a')
   var linkText = document.createTextNode(names[i])
   link.appendChild(linkText);
   link.setAttribute('href', '#' + makeId(names[i]))
   link.setAttribute('title', names[i])
   console.log(link)
-  document.getElementById('nav').appendChild(link)
+  li.appendChild(link)
+  document.getElementById('nav-list').appendChild(link)
 }
 
 var cssId = 'bootstrap';  // you could encode the css path itself to generate id..
