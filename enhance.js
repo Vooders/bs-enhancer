@@ -12,7 +12,6 @@ for (let i = 0; i < categories.length; i++) {
   }
 }
 
-console.log(names)
 var div = document.createElement("div")
 div.id = 'nav'
 document.getElementsByClassName('battlescribe')[1].appendChild(div)
@@ -29,14 +28,12 @@ for (var i=0; i < names.length; i++) {
   link.setAttribute('href', '#' + makeId(names[i]))
   link.setAttribute('title', names[i])
   link.setAttribute('class', 'btn')
-  console.log(link)
   li.appendChild(link)
   document.getElementById('nav-list').appendChild(link)
 }
 
-var cssId = 'bootstrap';  // you could encode the css path itself to generate id..
-if (!document.getElementById(cssId))
-{
+var cssId = 'bootstrap'
+if (!document.getElementById(cssId)) {
     var head  = document.getElementsByTagName('head')[0];
     var link  = document.createElement('link');
     link.id   = cssId;
