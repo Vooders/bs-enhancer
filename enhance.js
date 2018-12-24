@@ -1,13 +1,23 @@
 var categories = document.getElementsByClassName('category')
 var body = document.getElementsByClassName('battlescribe')[1]
+var head  = document.getElementsByTagName('head')[0]
 
-const names = getNames()
-createNavContainer()
-createLinks(names)
-addDependencies()
-waitForElement()
-styleNavContainer()
-sign()
+loadJquery()
+
+setTimeout(function () {
+  const names = getNames()
+  createNavContainer()
+  createLinks(names)
+  addDependencies()
+  styleNavContainer()
+  sign()
+}, 250)
+
+function loadJquery(){
+  var jquery = document.createElement('script')
+  jquery.src = 'https://code.jquery.com/jquery-3.3.1.slim.min.js'
+  body.appendChild(jquery)
+}
 
 function getNames () {
   var names = []
@@ -58,7 +68,7 @@ function buildModals (html, name) {
   var modalContent = document.createElement('div')
   modalContent.setAttribute('class', 'modal-content')
   modalContent.innerHTML = html.innerHTML
-  modalContent.style.paddingBottom = '20px'
+  modalContent.style.padding = '20px'
 
   modalDialog.appendChild(modalContent)
   modal.appendChild(modalDialog)
@@ -119,7 +129,6 @@ function createLinks (names) {
 function addDependencies () {
   var cssId = 'bootstrap'
   if (!document.getElementById(cssId)) {
-    var head  = document.getElementsByTagName('head')[0]
     var bootstrapCss  = document.createElement('link')
     bootstrapCss.id   = cssId
     bootstrapCss.rel  = 'stylesheet'
@@ -127,18 +136,8 @@ function addDependencies () {
     bootstrapCss.href = 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css'
     bootstrapCss.media = 'all'
 
-    var jquery = document.createElement('script')
-    jquery.src = 'https://code.jquery.com/jquery-3.3.1.slim.min.js'
-    body.appendChild(jquery)
     head.appendChild(bootstrapCss)
 
-  }
-}
-
-function waitForElement(){
-  console.log('checking G')
-  if(typeof g !== undefined || g !== null){
-    console.log('G is defined')
     var popper = document.createElement('script')
     popper.src = 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js'
     
@@ -147,9 +146,6 @@ function waitForElement(){
 
     body.appendChild(popper)
     body.appendChild(bootstrap)
-  } else {
-    console.log('waiting...')
-    setTimeout(waitForElement, 250);
   }
 }
 
