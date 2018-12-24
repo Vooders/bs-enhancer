@@ -11,7 +11,7 @@ setTimeout(function () {
   addDependencies()
   styleNavContainer()
   sign()
-}, 250)
+}, 100)
 
 function loadJquery(){
   var jquery = document.createElement('script')
@@ -44,7 +44,6 @@ function getNames () {
 }
 
 function buildModals (html, name) {
-  console.log(html)
   var id = makeId(name) + '_modal'
   var button = document.createElement('button')
   var buttonText = document.createTextNode('+')
