@@ -14,21 +14,56 @@ function getNames () {
   for (let i = 0; i < categories.length; i++) {
     var units = categories.item(i).getElementsByClassName('rootselection')
   
-    for (var k=0; k<units.length; k++) { 
-      var name = units[k].innerText.split('\n')[0].split('[')[0].trim()
+    for (var k=0; k<units.length; k++) {
+      var unit = units[k]
+      var name = unit.innerText.split('\n')[0].split('[')[0].trim()
       var correctedName = (names.indexOf(name) > -1) ? name+'1' : name
       names.push(correctedName)
-      units[k].setAttribute('id', makeId(correctedName))
-      var ul = units[k].querySelector('ul')
+      unit.setAttribute('id', makeId(correctedName))
+      var ul = unit.querySelector('ul')
       if (ul) {
         ul.setAttribute('id', makeId(correctedName) + '_selection')
         ul.setAttribute('class', 'collapse')
         var button = createButton(correctedName)
         ul.parentNode.insertBefore(button, ul)
       }
+      buildModals(unit, name)
     }
   }
   return names
+}
+
+function buildModals (html, name) {
+  console.log(html)
+  var id = makeId(name) + '_modal'
+  var button = document.createElement('button')
+  var buttonText = document.createTextNode('+')
+  button.appendChild(buttonText)
+  button.setAttribute('data-toggle', 'modal')
+  button.setAttribute('data-target', '#' + id)
+  html.insertBefore(button, html.firstElementChild)
+  
+  var modal = document.createElement('div')
+  modal.setAttribute('class', 'modal fade')
+  modal.setAttribute('id', id)
+  modal.setAttribute('tabindex', '-1')
+  modal.setAttribute('role', 'dialog')
+  modal.setAttribute('aria-hidden', 'true')
+
+  var modalDialog = document.createElement('div')
+  modalDialog.setAttribute('class', 'modal-dialog')
+  modalDialog.setAttribute('role', 'document')
+  modalDialog.style.maxWidth = '800px'
+
+  var modalContent = document.createElement('div')
+  modalContent.setAttribute('class', 'modal-content')
+  modalContent.innerHTML = html.innerHTML
+  modalContent.style.paddingBottom = '20px'
+
+  modalDialog.appendChild(modalContent)
+  modal.appendChild(modalDialog)
+
+  body.appendChild(modal)
 }
 
 function sign () {
@@ -127,7 +162,7 @@ function styleNavContainer () {
   nav.style.height = '100%'
   nav.style.backgroundColor = 'white'
 
-  body.style.marginLeft = '180px'
+  body.style.marginLeft = '170px'
   body.style.marginRight = '0'
 }
 
