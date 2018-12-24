@@ -5,8 +5,9 @@ const names = getNames()
 createNavContainer()
 createLinks(names)
 addDependencies()
+waitForElement()
 styleNavContainer()
-
+sign()
 
 function getNames () {
   var names = []
@@ -24,12 +25,20 @@ function getNames () {
         ul.setAttribute('class', 'collapse')
         var button = createButton(correctedName)
         ul.parentNode.insertBefore(button, ul)
-      } 
-
-      console.log(units[k].querySelector('ul'))
+      }
     }
   }
   return names
+}
+
+function sign () {
+  var children = body.children
+  for (var i = 0; i < children.length; i++) {
+    var child = children[i]
+    if (child.localName === 'p') {
+      child.innerHTML = child.innerHTML +' enhanced by <a href="https://github.com/Vooders" target="_blank">Vooders</a>'
+    }
+  }
 }
 
 function createButton (correctedName) {
@@ -40,6 +49,7 @@ function createButton (correctedName) {
   button.setAttribute('href', '#' + makeId(correctedName) + '_selection')
   button.setAttribute('data-toggle', 'collapse')
   button.setAttribute('role', 'button')
+  button.style.margin = '5px'
   return button
 }
 
@@ -75,26 +85,36 @@ function addDependencies () {
   var cssId = 'bootstrap'
   if (!document.getElementById(cssId)) {
     var head  = document.getElementsByTagName('head')[0]
-    var link  = document.createElement('link')
-    link.id   = cssId
-    link.rel  = 'stylesheet'
-    link.type = 'text/css'
-    link.href = 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css'
-    link.media = 'all'
+    var bootstrapCss  = document.createElement('link')
+    bootstrapCss.id   = cssId
+    bootstrapCss.rel  = 'stylesheet'
+    bootstrapCss.type = 'text/css'
+    bootstrapCss.href = 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css'
+    bootstrapCss.media = 'all'
 
     var jquery = document.createElement('script')
     jquery.src = 'https://code.jquery.com/jquery-3.3.1.slim.min.js'
+    body.appendChild(jquery)
+    head.appendChild(bootstrapCss)
 
+  }
+}
+
+function waitForElement(){
+  console.log('checking G')
+  if(typeof g !== undefined || g !== null){
+    console.log('G is defined')
     var popper = document.createElement('script')
     popper.src = 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js'
-
+    
     var bootstrap = document.createElement('script')
     bootstrap.src = 'https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js'
 
-    head.appendChild(link)
-    body.appendChild(jquery)
     body.appendChild(popper)
     body.appendChild(bootstrap)
+  } else {
+    console.log('waiting...')
+    setTimeout(waitForElement, 250);
   }
 }
 
