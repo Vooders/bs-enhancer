@@ -119,6 +119,7 @@ function createLinks (names) {
     link.setAttribute('title', names[i])
     link.setAttribute('type', 'button')
     link.setAttribute('class', 'btn btn-warning')
+    link.style.width = '175px'
     link.style.fontSize = '0.8rem'
     li.appendChild(link)
     document.getElementById('nav-list').appendChild(link)
@@ -153,11 +154,11 @@ function styleNavContainer () {
   nav.style.position = 'fixed'
   nav.style.bottom = '0'
   nav.style.left = '0'
-  nav.style.width = '40px'
+  nav.style.width = '175px'
   nav.style.height = '100%'
   nav.style.backgroundColor = 'white'
 
-  body.style.marginLeft = '170px'
+  body.style.marginLeft = '180px'
   body.style.marginRight = '0'
 }
 
