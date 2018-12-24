@@ -80,7 +80,7 @@ function sign () {
   for (var i = 0; i < children.length; i++) {
     var child = children[i]
     if (child.localName === 'p') {
-      child.innerHTML = child.innerHTML +' enhanced by <a href="https://github.com/Vooders" target="_blank">Vooders</a>'
+      child.innerHTML = child.innerHTML +' enhanced by <a href="https://github.com/Vooders/bs-enhancer" target="_blank">Vooders</a>'
     }
   }
 }
