@@ -2,16 +2,18 @@ var categories = document.getElementsByClassName('category')
 var body = document.getElementsByClassName('battlescribe')[1]
 var head  = document.getElementsByTagName('head')[0]
 
-loadJquery()
+if (body) {
+  loadJquery()
 
-setTimeout(function () {
-  const names = getNames()
-  createNavContainer()
-  createLinks(names)
-  addDependencies()
-  styleNavContainer()
-  sign()
-}, 100)
+  setTimeout(function () {
+    const names = getNames()
+    createNavContainer()
+    createLinks(names)
+    addDependencies()
+    styleNavContainer()
+    sign()
+  }, 100)
+}
 
 function loadJquery(){
   var jquery = document.createElement('script')

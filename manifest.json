@@ -1,0 +1,17 @@
+{
+  "manifest_version": 2,
+  "name": "BS Enhancer Extension",
+  "version": "1.0",
+
+  "description": "Automatically enhance BS HTML",
+
+  "icons": {
+    "48": "icons/icon.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["file:///*"],
+      "js": ["enhance.js"]
+    }
+  ]
+}
