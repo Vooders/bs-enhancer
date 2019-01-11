@@ -8,6 +8,7 @@ if (body) {
   setTimeout(function () {
     const names = getNames()
     createNavContainer()
+    buildRuleModals()
     createLinks(names)
     addDependencies()
     styleNavContainer()
@@ -39,21 +40,17 @@ function getNames () {
         var button = createButton(correctedName)
         ul.parentNode.insertBefore(button, ul)
       }
-      buildModals(unit, name)
+
+      var id = makeId(name)
+      var button = buildModal(unit, id, '+')
+      unit.insertBefore(button, unit.firstElementChild)
     }
   }
   return names
 }
 
-function buildModals (html, name) {
-  var id = makeId(name) + '_modal'
-  var button = document.createElement('button')
-  var buttonText = document.createTextNode('+')
-  button.appendChild(buttonText)
-  button.setAttribute('data-toggle', 'modal')
-  button.setAttribute('data-target', '#' + id)
-  html.insertBefore(button, html.firstElementChild)
-  
+function buildModal (html, name, text) {
+  var id = name + '_modal'
   var modal = document.createElement('div')
   modal.setAttribute('class', 'modal fade')
   modal.setAttribute('id', id)
@@ -75,6 +72,14 @@ function buildModals (html, name) {
   modal.appendChild(modalDialog)
 
   body.appendChild(modal)
+
+  var button = document.createElement('button')
+  var buttonText = document.createTextNode(text)
+  button.appendChild(buttonText)
+  button.setAttribute('data-toggle', 'modal')
+  button.setAttribute('data-target', '#' + id)
+
+  return button
 }
 
 function sign () {
@@ -99,15 +104,34 @@ function createButton (correctedName) {
   return button
 }
 
+function buildRuleModals () {
+  var ruleSets = document.getElementsByClassName('summary')
+  for (let i = 0; i < ruleSets.length; i++) {
+    var ruleSet = ruleSets[i]
+    var rules = ruleSet.getElementsByTagName('p')
+    var navMenu = addNavList(ruleSet.firstElementChild.innerText)
+    for (let k = 0; k < rules.length; k++) {
+      var rule = rules[k]
+      var name = rule.firstElementChild.innerHTML.replace(/:/g, '')
+      var id = makeId(name)
+      navMenu.appendChild(buildModal(rule, id, name))
+    }
+  }
+}
+
 function createNavContainer () {
   var div = document.createElement("div")
   div.id = 'nav'
   body.appendChild(div)
+  addNavList('nav')
+}
 
-  var ul = document.createElement("ul")
-  ul.setAttribute('id','nav-list')
-  ul.setAttribute('class','nav flex-column')
-  document.getElementById('nav').appendChild(ul)
+function addNavList (id) {
+  var navList = document.createElement("ul")
+  navList.setAttribute('id', `${id}-list`)
+  navList.setAttribute('class',`nav flex-column`)
+  document.getElementById('nav').appendChild(navList)
+  return navList
 }
 
 function createLinks (names) {
