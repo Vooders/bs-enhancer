@@ -1,4 +1,3 @@
-var categories = document.getElementsByClassName('category')
 var body = document.getElementsByClassName('battlescribe')[1]
 var head  = document.getElementsByTagName('head')[0]
 
@@ -6,9 +5,11 @@ if (body) {
   loadJquery()
 
   setTimeout(function () {
-    const names = getNames()
+    const names = getNamesAndAddIds()
+    const rules = getRules()
+    buildUnitModals(names)
     createNavContainer()
-    buildRuleModals()
+    buildRuleModals(rules)
     createLinks(names)
     addDependencies()
     styleNavContainer()
@@ -22,31 +23,59 @@ function loadJquery(){
   body.appendChild(jquery)
 }
 
-function getNames () {
+function getNamesAndAddIds () {
   var names = []
+  const categories = document.getElementsByClassName('category')
   for (let i = 0; i < categories.length; i++) {
     var units = categories.item(i).getElementsByClassName('rootselection')
-  
     for (var k=0; k<units.length; k++) {
       var unit = units[k]
       var name = unit.innerText.split('\n')[0].split('[')[0].trim()
       var correctedName = (names.indexOf(name) > -1) ? name+'1' : name
       names.push(correctedName)
       unit.setAttribute('id', makeId(correctedName))
-      var ul = unit.querySelector('ul')
-      if (ul) {
-        ul.setAttribute('id', makeId(correctedName) + '_selection')
-        ul.setAttribute('class', 'collapse')
-        var button = createButton(correctedName)
-        ul.parentNode.insertBefore(button, ul)
-      }
-
-      var id = makeId(name)
-      var button = buildModal(unit, id, '+')
-      unit.insertBefore(button, unit.firstElementChild)
     }
   }
   return names
+}
+
+function buildUnitModals (names) {
+  names.forEach((name) => {
+    const unit = document.getElementById(makeId(name))
+    const button = buildModal(unit, makeId(name), '+')
+    unit.insertBefore(button, unit.firstElementChild)
+  })
+}
+
+function getRules () {
+  var results = {}
+  var ruleSets = document.getElementsByClassName('summary')
+
+  var ruleSets = document.getElementsByClassName('summary')
+  for (let i = 0; i < ruleSets.length; i++) {
+    var ruleSet = ruleSets.item(i)
+    var rules = ruleSet.getElementsByTagName('p')
+    var ruleSetName = ruleSet.firstElementChild.innerText
+    results[ruleSetName] = []
+    for (let k = 0; k < rules.length; k++) {
+      var rule = rules[k]
+      results[ruleSetName].push({
+        name: rule.firstElementChild.innerHTML.replace(/:/g, ''),
+        html: rule.innerHTML
+      })
+    }
+  }
+  return results
+}
+
+function buildRuleModals (rules) {
+  const ruleTypes = Object.keys(rules)
+  ruleTypes.forEach((ruleType) => {
+    const navList = addNavList(makeId(ruleType))
+    rules[ruleType].forEach((rule) => {
+      navList.appendChild(buildModal(rule.html, makeId(rule.name), rule.name))
+    })
+  })
 }
 
 function buildModal (html, name, text) {
@@ -65,7 +94,7 @@ function buildModal (html, name, text) {
 
   var modalContent = document.createElement('div')
   modalContent.setAttribute('class', 'modal-content')
-  modalContent.innerHTML = html.innerHTML
+  modalContent.innerHTML = html.innerHTML || html
   modalContent.style.padding = '20px'
 
   modalDialog.appendChild(modalContent)
@@ -104,21 +133,6 @@ function createButton (correctedName) {
   return button
 }
 
-function buildRuleModals () {
-  var ruleSets = document.getElementsByClassName('summary')
-  for (let i = 0; i < ruleSets.length; i++) {
-    var ruleSet = ruleSets[i]
-    var rules = ruleSet.getElementsByTagName('p')
-    var navMenu = addNavList(ruleSet.firstElementChild.innerText)
-    for (let k = 0; k < rules.length; k++) {
-      var rule = rules[k]
-      var name = rule.firstElementChild.innerHTML.replace(/:/g, '')
-      var id = makeId(name)
-      navMenu.appendChild(buildModal(rule, id, name))
-    }
-  }
-}
-
 function createNavContainer () {
   var div = document.createElement("div")
   div.id = 'nav'
@@ -127,10 +141,12 @@ function createNavContainer () {
 }
 
 function addNavList (id) {
+  var div = document.createElement('div')
   var navList = document.createElement("ul")
   navList.setAttribute('id', `${id}-list`)
   navList.setAttribute('class',`nav flex-column`)
-  document.getElementById('nav').appendChild(navList)
+  div.appendChild(navList)
+  document.getElementById('nav').appendChild(div)
   return navList
 }
 
