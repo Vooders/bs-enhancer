@@ -5,14 +5,14 @@ if (body) {
   loadJquery()
 
   setTimeout(function () {
+    addDependencies()
     const names = getNamesAndAddIds()
     const rules = getRules()
-    buildUnitModals(names)
     hideModelEquipment(names)
+    buildUnitModals(names)
     createNavContainer()
     buildRuleModals(rules)
     createLinks(names)
-    addDependencies()
     sign()
   }, 100)
 }
