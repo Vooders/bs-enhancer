@@ -12,7 +12,6 @@ if (body) {
     buildRuleModals(rules)
     createLinks(names)
     addDependencies()
-    styleNavContainer()
     sign()
   }, 100)
 }
@@ -71,7 +70,7 @@ function getRules () {
 function buildRuleModals (rules) {
   const ruleTypes = Object.keys(rules)
   ruleTypes.forEach((ruleType) => {
-    const navList = addNavList(makeId(ruleType))
+    const navList = addNavList(makeId(ruleType), ruleType)
     rules[ruleType].forEach((rule) => {
       navList.appendChild(buildModal(rule.html, makeId(rule.name), rule.name))
     })
@@ -90,12 +89,10 @@ function buildModal (html, name, text) {
   var modalDialog = document.createElement('div')
   modalDialog.setAttribute('class', 'modal-dialog')
   modalDialog.setAttribute('role', 'document')
-  modalDialog.style.maxWidth = '800px'
 
   var modalContent = document.createElement('div')
   modalContent.setAttribute('class', 'modal-content')
   modalContent.innerHTML = html.innerHTML || html
-  modalContent.style.padding = '20px'
 
   modalDialog.appendChild(modalContent)
   modal.appendChild(modalDialog)
@@ -140,8 +137,15 @@ function createNavContainer () {
   addNavList('nav')
 }
 
-function addNavList (id) {
+function addNavList (id, title = null) {
   var div = document.createElement('div')
+  div.setAttribute('class', 'nav-menu')
+  if (title) {
+    var heading = document.createElement('h3')
+    var text = document.createTextNode(title)
+    heading.appendChild(text)
+    div.appendChild(heading)
+  }  
   var navList = document.createElement("ul")
   navList.setAttribute('id', `${id}-list`)
   navList.setAttribute('class',`nav flex-column`)
@@ -160,9 +164,7 @@ function createLinks (names) {
     link.setAttribute('href', '#' + makeId(names[i]))
     link.setAttribute('title', names[i])
     link.setAttribute('type', 'button')
-    link.setAttribute('class', 'btn btn-warning')
-    link.style.width = '175px'
-    link.style.fontSize = '0.8rem'
+    link.setAttribute('class', 'btn btn-warning nav-thing')
     li.appendChild(link)
     document.getElementById('nav-list').appendChild(link)
   }
@@ -189,19 +191,6 @@ function addDependencies () {
     body.appendChild(popper)
     body.appendChild(bootstrap)
   }
-}
-
-function styleNavContainer () {
-  var nav = document.getElementById('nav')
-  nav.style.position = 'fixed'
-  nav.style.bottom = '0'
-  nav.style.left = '0'
-  nav.style.width = '175px'
-  nav.style.height = '100%'
-  nav.style.backgroundColor = 'white'
-
-  body.style.marginLeft = '180px'
-  body.style.marginRight = '0'
 }
 
 function makeId (name) {
