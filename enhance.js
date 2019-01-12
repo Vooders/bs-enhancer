@@ -8,6 +8,7 @@ if (body) {
     const names = getNamesAndAddIds()
     const rules = getRules()
     buildUnitModals(names)
+    hideModelEquipment(names)
     createNavContainer()
     buildRuleModals(rules)
     createLinks(names)
@@ -49,8 +50,6 @@ function buildUnitModals (names) {
 function getRules () {
   var results = {}
   var ruleSets = document.getElementsByClassName('summary')
-
-  var ruleSets = document.getElementsByClassName('summary')
   for (let i = 0; i < ruleSets.length; i++) {
     var ruleSet = ruleSets.item(i)
     var rules = ruleSet.getElementsByTagName('p')
@@ -77,6 +76,32 @@ function buildRuleModals (rules) {
   })
 }
 
+function hideModelEquipment (names) {
+  names.forEach((name) => {
+    var unit = document.getElementById(makeId(name))
+    var equipment = unit.querySelector('ul')
+    if (equipment) {
+      var revealButton = hideSection(equipment, makeId(name))
+      equipment.parentNode.insertBefore(revealButton, equipment)
+    }
+  })
+}
+
+function hideSection (section, id) {
+  section.setAttribute('id', id + '_selection')
+  section.setAttribute('class', 'collapse')
+
+  var revealButton = document.createElement('a')
+  var linkText = document.createTextNode('+ weapon selection')
+  revealButton.appendChild(linkText)
+  revealButton.setAttribute('class', 'btn btn-primary btn-sm')
+  revealButton.setAttribute('href', `#${id}_selection`)
+  revealButton.setAttribute('data-toggle', 'collapse')
+  revealButton.setAttribute('role', 'button')
+  revealButton.style.margin = '5px'
+  return revealButton
+}
+
 function buildModal (html, name, text) {
   var id = name + '_modal'
   var modal = document.createElement('div')
@@ -99,13 +124,13 @@ function buildModal (html, name, text) {
 
   body.appendChild(modal)
 
-  var button = document.createElement('button')
+  var triggerButton = document.createElement('button')
   var buttonText = document.createTextNode(text)
-  button.appendChild(buttonText)
-  button.setAttribute('data-toggle', 'modal')
-  button.setAttribute('data-target', '#' + id)
+  triggerButton.appendChild(buttonText)
+  triggerButton.setAttribute('data-toggle', 'modal')
+  triggerButton.setAttribute('data-target', '#' + id)
 
-  return button
+  return triggerButton
 }
 
 function sign () {
@@ -116,18 +141,6 @@ function sign () {
       child.innerHTML = child.innerHTML +' enhanced by <a href="https://github.com/Vooders/bs-enhancer" target="_blank">Vooders</a>'
     }
   }
-}
-
-function createButton (correctedName) {
-  var button = document.createElement('a')
-  var linkText = document.createTextNode('+ weapon selection')
-  button.appendChild(linkText)
-  button.setAttribute('class', 'btn btn-primary btn-sm')
-  button.setAttribute('href', '#' + makeId(correctedName) + '_selection')
-  button.setAttribute('data-toggle', 'collapse')
-  button.setAttribute('role', 'button')
-  button.style.margin = '5px'
-  return button
 }
 
 function createNavContainer () {

@@ -32,3 +32,11 @@ div.battlescribe {
 .nav-menu > h3 {
   padding-left: 5px!important;
 }
+
+div.battlescribe h1 {
+  margin: 8px 0px 0px 10px!important;
+}
+
+div.battlescribe h2 {
+  margin: 0px 0px 0px 10px!important;
+}
