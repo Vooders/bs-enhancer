@@ -31,12 +31,22 @@ function getNamesAndAddIds () {
     for (var k=0; k<units.length; k++) {
       var unit = units[k]
       var name = unit.innerText.split('\n')[0].split('[')[0].trim()
-      var correctedName = (names.indexOf(name) > -1) ? name+'1' : name
+      var correctedName = numberDuplicateNames(names, name)
       names.push(correctedName)
+      console.log(`Added ${correctedName}`)
       unit.setAttribute('id', makeId(correctedName))
     }
   }
   return names
+}
+
+function numberDuplicateNames (names, name, num = 1) {
+  if (num > 10) throw new Error('Arrggghhhh')
+  if (names.indexOf(name) > -1) {
+    return numberDuplicateNames(names, name+num, ++num)
+  } else {
+    return name
+  }
 }
 
 function buildUnitModals (names) {
