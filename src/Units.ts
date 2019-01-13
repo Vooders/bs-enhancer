@@ -1,4 +1,5 @@
 import { Nav } from './Nav'
+import { Modal } from './Modal'
 
 type Unit = {
   readonly name: string,
@@ -29,6 +30,7 @@ export class Units {
     this.units.forEach((unit) => {
       const li = document.createElement("li")
       li.setAttribute('class','nav-item')
+      
       const link = document.createElement('a')
       const linkText = document.createTextNode(unit.name)
       link.appendChild(linkText)
@@ -38,6 +40,14 @@ export class Units {
       link.setAttribute('class', 'btn btn-warning nav-thing')
       li.appendChild(link)
       menu.appendChild(link)
+    })
+  }
+
+  createModals () {
+    this.getUnitIds().forEach((unitId: string) => {
+      const element: any = document.getElementById(unitId)
+      const button = Modal.create(element, unitId, '+')
+      element.insertBefore(button, element.firstElementChild)
     })
   }
 
@@ -52,6 +62,10 @@ export class Units {
 
   private getUnitNames () {
     return this.units.map((unit: Unit) => unit.name)
+  }
+
+  private getUnitIds () {
+    return this.units.map((unit: Unit) => unit.id)
   }
 }
 

@@ -4,7 +4,6 @@ const head  = document.getElementsByTagName('head')[0]
 
 export class DependencyManager {
   loadDependencies () {
-    console.log('loading dependencies...')
     config.css.forEach((script) => {
       const css  = document.createElement('link')
       css.setAttribute('rel', 'stylesheet')
