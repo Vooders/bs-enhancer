@@ -1,7 +1,9 @@
-const body = document.getElementsByClassName('battlescribe')[1]
-const head  = document.getElementsByTagName('head')[0]
+import { DependencyManager } from './src/dependencyManager'
 
-if (body) {
-  console.log(body)
-  console.log(head)
-}
+console.log('starting app')
+// const body = document.getElementsByClassName('battlescribe')[1]
+// const head  = document.getElementsByTagName('head')[0]
+
+const dependencyManager = new DependencyManager()
+dependencyManager.loadDependencies()
+
