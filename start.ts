@@ -1,9 +1,11 @@
-import { DependencyManager } from './src/dependencyManager'
-
-console.log('starting app')
-// const body = document.getElementsByClassName('battlescribe')[1]
-// const head  = document.getElementsByTagName('head')[0]
+import { DependencyManager } from './src/DependencyManager'
+import { Units } from './src/Units'
+import { Nav } from './src/Nav'
 
 const dependencyManager = new DependencyManager()
-dependencyManager.loadDependencies()
+const units = new Units()
 
+dependencyManager.loadDependencies()
+Nav.init()
+units.setIds()
+units.createNavMenu()
