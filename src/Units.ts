@@ -1,5 +1,6 @@
 import { Nav } from './Nav'
 import { Modal } from './Modal'
+import { ElementTools } from './ElementTools'
 
 type Unit = {
   readonly name: string,
@@ -9,7 +10,11 @@ type Unit = {
 export class Units {
   private units: Unit[] = []
 
-  setIds () {
+  constructor () {
+    this.setIds()
+  }
+
+  private setIds () {
     const categories: HTMLCollection = document.getElementsByClassName('category')
     for (let i = 0; i < categories.length; i++) {
       const units: HTMLCollection = categories.item(i)!.getElementsByClassName('rootselection')
@@ -48,6 +53,17 @@ export class Units {
       const element: any = document.getElementById(unitId)
       const button = Modal.create(element, unitId, '+')
       element.insertBefore(button, element.firstElementChild)
+    })
+  }
+
+  hideModelEquipment () {
+    this.getUnitIds().forEach((unitId: string) => {
+      var unit: any = document.getElementById(unitId)
+      var equipment: any = unit.querySelector('ul')
+      if (equipment) {
+        var revealButton = ElementTools.hide(equipment, unitId, 'Show Weapon Selection')
+        equipment.parentNode.insertBefore(revealButton, equipment)
+      }
     })
   }
 

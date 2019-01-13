@@ -7,6 +7,6 @@ const units = new Units()
 
 dependencyManager.loadDependencies()
 Nav.init()
-units.setIds()
 units.createNavMenu()
 units.createModals()
+units.hideModelEquipment()

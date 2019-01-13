@@ -5,7 +5,6 @@ export class Nav {
     const div = document.createElement("div")
     div.id = 'nav'
     body.appendChild(div)
-    // addNavList('nav')
   }
 
   static newNavList (id: string, title:string): HTMLUListElement {
