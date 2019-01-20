@@ -3,8 +3,8 @@ export class ElementTools {
     section.setAttribute('id', id + '_selection')
     section.setAttribute('class', 'collapse')
 
-    var revealButton = document.createElement('button')
-    var linkText = document.createTextNode(buttonText)
+    const revealButton = document.createElement('button')
+    const linkText = document.createTextNode(buttonText)
     revealButton.appendChild(linkText)
     revealButton.setAttribute('href', `#${id}_selection`)
     revealButton.setAttribute('data-toggle', 'collapse')

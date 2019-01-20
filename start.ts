@@ -4,12 +4,14 @@ import { Nav } from './src/Nav'
 import { Rules } from './src/Rules'
 
 const dependencyManager = new DependencyManager()
-const units = new Units()
-const rules = new Rules()
-
 dependencyManager.loadDependencies()
+
 Nav.init()
+
+const units = new Units()
 units.createNavMenu()
 units.createModals()
 units.hideModelEquipment()
+
+const rules = new Rules()
 rules.buildModals()

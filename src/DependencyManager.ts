@@ -13,7 +13,7 @@ export class DependencyManager {
       head.appendChild(css)
     })
 
-    var promise:any = Promise.resolve()
+    let promise:any = Promise.resolve()
     const intervalBetweenScriptLoads = 200
     config.js.forEach((script) => {
       promise = promise.then(function () {

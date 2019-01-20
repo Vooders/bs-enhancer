@@ -36,14 +36,14 @@ export class Rules {
   }
 
   private getRules () {
-    var ruleSets = document.getElementsByClassName('summary')
+    const ruleSets = document.getElementsByClassName('summary')
     for (let i = 0; i < ruleSets.length; i++) {
-      var ruleSet: any = ruleSets.item(i)
-      var rules = ruleSet.getElementsByTagName('p')
-      var ruleSetName = ruleSet.firstElementChild.innerText
+      const ruleSet: any = ruleSets.item(i)
+      const rules = ruleSet.getElementsByTagName('p')
+      const ruleSetName = ruleSet.firstElementChild.innerText
       this.rules[ruleSetName] = []
       for (let k = 0; k < rules.length; k++) {
-        var rule = rules[k]
+        const rule = rules[k]
         this.rules[ruleSetName].push({
           name: rule.firstElementChild.innerHTML.replace(/:/g, ''),
           html: rule

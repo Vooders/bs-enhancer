@@ -48,7 +48,7 @@ export class Units {
       const unit: any = document.getElementById(unitId)
       const equipment: any = unit.querySelector('ul')
       if (equipment) {
-        var revealButton = ElementTools.hide(equipment, unitId, 'Show Weapon Selection')
+        const revealButton = ElementTools.hide(equipment, unitId, 'Show Weapon Selection')
         revealButton.setAttribute('class', 'btn btn-dark unit-button')
         equipment.parentNode.insertBefore(revealButton, equipment)
       }
@@ -59,7 +59,7 @@ export class Units {
     const categories: HTMLCollection = document.getElementsByClassName('category')
     for (let i = 0; i < categories.length; i++) {
       const units: HTMLCollection = categories.item(i)!.getElementsByClassName('rootselection')
-      for (var k=0; k<units.length; k++) {
+      for (let k=0; k<units.length; k++) {
         const unitElement: any = units[k]
         const name = unitElement.innerText.split('\n')[0].split('[')[0].trim()
         const correctedName = this.setUniqueName(name)

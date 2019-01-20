@@ -11,12 +11,12 @@ export class Nav {
     const div = document.createElement('div')
     div.setAttribute('class', 'nav-menu')
     if (title) {
-      var heading = document.createElement('h3')
-      var text = document.createTextNode(title)
+      const heading = document.createElement('h3')
+      const text = document.createTextNode(title)
       heading.appendChild(text)
       div.appendChild(heading)
     }  
-    var navList = document.createElement("ul")
+    const navList = document.createElement("ul")
     navList.setAttribute('id', id)
     navList.setAttribute('class',`nav flex-column`)
     div.appendChild(navList)
