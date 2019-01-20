@@ -1,5 +1,5 @@
 .battlescribe, .modal-content {
-  background-color: #ccc;
+  background-color: #fff;
 }
 
 p, h1, h2, h3, h4, h5, h6, td, th, .modal-content {
@@ -27,7 +27,7 @@ li.nav-item {
 }
 
 .modal-dialog {
-  max-width: 800px;
+  max-width: 800px!important;
 }
 
 .modal-content {
@@ -37,7 +37,7 @@ li.nav-item {
 .nav-button {
   font-size: 12px!important;
   width: 100%;
-  white-space: normal;
+  white-space: normal!important;
 }
 
 .unit-button {
