@@ -31,12 +31,22 @@ function getNamesAndAddIds () {
     for (var k=0; k<units.length; k++) {
       var unit = units[k]
       var name = unit.innerText.split('\n')[0].split('[')[0].trim()
-      var correctedName = (names.indexOf(name) > -1) ? name+'1' : name
+      var correctedName = numberDuplicateNames(names, name)
       names.push(correctedName)
+      console.log(`Added ${correctedName}`)
       unit.setAttribute('id', makeId(correctedName))
     }
   }
   return names
+}
+
+function numberDuplicateNames (names, name, num = 1) {
+  if (num > 10) throw new Error('Arrggghhhh')
+  if (names.indexOf(name) > -1) {
+    return numberDuplicateNames(names, name+num, ++num)
+  } else {
+    return name
+  }
 }
 
 function buildUnitModals (names) {
@@ -143,69 +153,3 @@ function sign () {
   }
 }
 
-function createNavContainer () {
-  var div = document.createElement("div")
-  div.id = 'nav'
-  body.appendChild(div)
-  addNavList('nav')
-}
-
-function addNavList (id, title = null) {
-  var div = document.createElement('div')
-  div.setAttribute('class', 'nav-menu')
-  if (title) {
-    var heading = document.createElement('h3')
-    var text = document.createTextNode(title)
-    heading.appendChild(text)
-    div.appendChild(heading)
-  }  
-  var navList = document.createElement("ul")
-  navList.setAttribute('id', `${id}-list`)
-  navList.setAttribute('class',`nav flex-column`)
-  div.appendChild(navList)
-  document.getElementById('nav').appendChild(div)
-  return navList
-}
-
-function createLinks (names) {
-  for (var i=0; i < names.length; i++) {
-    var li = document.createElement("li")
-    li.setAttribute('class','nav-item')
-    var link = document.createElement('a')
-    var linkText = document.createTextNode(names[i])
-    link.appendChild(linkText)
-    link.setAttribute('href', '#' + makeId(names[i]))
-    link.setAttribute('title', names[i])
-    link.setAttribute('type', 'button')
-    link.setAttribute('class', 'btn btn-warning nav-thing')
-    li.appendChild(link)
-    document.getElementById('nav-list').appendChild(link)
-  }
-}
-
-function addDependencies () {
-  var cssId = 'bootstrap'
-  if (!document.getElementById(cssId)) {
-    var bootstrapCss  = document.createElement('link')
-    bootstrapCss.id   = cssId
-    bootstrapCss.rel  = 'stylesheet'
-    bootstrapCss.type = 'text/css'
-    bootstrapCss.href = 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css'
-    bootstrapCss.media = 'all'
-
-    head.appendChild(bootstrapCss)
-
-    var popper = document.createElement('script')
-    popper.src = 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js'
-    
-    var bootstrap = document.createElement('script')
-    bootstrap.src = 'https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js'
-
-    body.appendChild(popper)
-    body.appendChild(bootstrap)
-  }
-}
-
-function makeId (name) {
-  return name.replace(/ /g, '_')
-}
