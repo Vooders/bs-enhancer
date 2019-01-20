@@ -21,10 +21,24 @@ export class Units {
       for (var k=0; k<units.length; k++) {
         const unitElement: any = units[k]
         const name = unitElement.innerText.split('\n')[0].split('[')[0].trim()
-        const correctedName = (this.getUnitNames().indexOf(name) > -1) ? name+'I' : name 
+        const correctedName = this.setUniqueName(name)
         const unit = this.addUnit(correctedName)
+        console.log(unitElement)
+        const nameElement = unitElement.querySelector('h4')
+        if (nameElement) {
+          nameElement.innerText = nameElement.innerText.replace(name, correctedName)
+        }
         unitElement.setAttribute('id', unit.id)
       }
+    }
+  }
+
+  private setUniqueName (name: string, i = 0): string {
+    if (this.getUnitNames().indexOf(name) > -1) {
+      const newName = (i > 0) ? name+'I' : name+' I'
+      return this.setUniqueName(newName, ++i)
+    } else {
+      return name
     }
   }
 
