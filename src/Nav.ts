@@ -1,7 +1,7 @@
 const body: Element = document.getElementsByClassName('battlescribe')[1]
 
 export class Nav {
-  static init () {
+  static init (): void {
     const div = document.createElement("div")
     div.id = 'nav'
     body.appendChild(div)

@@ -1,5 +1,5 @@
 export class ElementTools {
-  static hide (section: HTMLElement, id: string, buttonText: string) {
+  static hide (section: HTMLElement, id: string, buttonText: string): HTMLButtonElement {
     section.setAttribute('id', id + '_selection')
     section.setAttribute('class', 'collapse')
 

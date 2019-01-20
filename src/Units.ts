@@ -14,7 +14,7 @@ export class Units {
     this.setIds()
   }
 
-  private setIds () {
+  private setIds (): void {
     const categories: HTMLCollection = document.getElementsByClassName('category')
     for (let i = 0; i < categories.length; i++) {
       const units: HTMLCollection = categories.item(i)!.getElementsByClassName('rootselection')
@@ -42,7 +42,7 @@ export class Units {
     }
   }
 
-  createNavMenu () {
+  createNavMenu (): void {
     const menuId = 'nav-menu'
     const menuTitle = 'Units'
     const menu = Nav.newNavList(menuId, menuTitle)
@@ -62,7 +62,7 @@ export class Units {
     })
   }
 
-  createModals () {
+  createModals (): void {
     this.getUnitIds().forEach((unitId: string) => {
       const element: any = document.getElementById(unitId)
       const button = Modal.create(element, unitId, '+')
@@ -70,7 +70,7 @@ export class Units {
     })
   }
 
-  hideModelEquipment () {
+  hideModelEquipment (): void {
     this.getUnitIds().forEach((unitId: string) => {
       var unit: any = document.getElementById(unitId)
       var equipment: any = unit.querySelector('ul')
@@ -81,7 +81,7 @@ export class Units {
     })
   }
 
-  private addUnit (name: string) {
+  private addUnit (name: string): Unit {
     const unit = {
       name,
       id: name.replace(/ /g, '_')

@@ -1,7 +1,7 @@
 const body: Element = document.getElementsByClassName('battlescribe')[1]
 
 export class Modal {
-  static create (html: HTMLDivElement, name: string, buttonText: string) {
+  static create (html: HTMLDivElement, name: string, buttonText: string): HTMLButtonElement {
     var id = name + '_modal'
     var modal = document.createElement('div')
     modal.setAttribute('class', 'modal fade')
