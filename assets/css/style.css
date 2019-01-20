@@ -1,15 +1,29 @@
+.battlescribe, .modal-content {
+  background-color: #ccc;
+}
+
+p, h1, h2, h3, h4, h5, h6, td, th, .modal-content {
+  color: #222;
+}
+
 #nav {
   position: fixed;
   bottom: 0;
   left: 0;
   width: 175px;
   height: 100%;
-  background-color: white;
+  overflow-y: scroll;
+  padding-right: 15px;
+  padding-bottom: 50px;
 }
 
 div.battlescribe {
   margin-left: 180px!important;
   margin-right: 0!important;
+}
+
+li.nav-item {
+  margin: 2px 0px 0px 0px!important;
 }
 
 .modal-dialog {
@@ -20,9 +34,15 @@ div.battlescribe {
   padding: 20px;
 }
 
-.nav-thing {
-  width: 175px;
-  font-size: 0.8rem;
+.nav-button {
+  font-size: 12px!important;
+  width: 100%;
+  white-space: normal;
+}
+
+.unit-button {
+  font-size: 12px!important;
+  white-space: normal;
 }
 
 .nav-menu {
