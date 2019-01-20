@@ -13,13 +13,17 @@ export class DependencyManager {
       head.appendChild(css)
     })
 
-    var interval = 200
-    config.js.forEach(function (script, index) {
-      setTimeout(function () {
+    var promise:any = Promise.resolve()
+    const intervalBetweenScriptLoads = 200
+    config.js.forEach((script) => {
+      promise = promise.then(function () {
         const element = document.createElement('script')
         element.setAttribute('src', script.url)
         body.appendChild(element)
-      }, index * interval)
+        return new Promise(function (resolve) {
+          setTimeout(resolve, intervalBetweenScriptLoads)
+        })
+      })
     })
   }
 }
