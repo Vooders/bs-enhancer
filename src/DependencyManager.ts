@@ -13,10 +13,13 @@ export class DependencyManager {
       head.appendChild(css)
     })
 
-    config.js.forEach((script) => {
-      const element = document.createElement('script')
-      element.setAttribute('src', script.url)
-      body.appendChild(element)
+    var interval = 200
+    config.js.forEach(function (script, index) {
+      setTimeout(function () {
+        const element = document.createElement('script')
+        element.setAttribute('src', script.url)
+        body.appendChild(element)
+      }, index * interval)
     })
   }
 }
