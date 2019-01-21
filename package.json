@@ -5,9 +5,9 @@
   "main": "start.js",
   "scripts": {
     "build": "tsc",
-    "postbuild": "npm-run-all -p package" ,
+    "postbuild": "npm-run-all -p package",
     "package": "./scripts/packageApp.sh",
-    "postpackage": "rm -rf ts",
+    "postpackage": "webpack && rm -rf ts",
     "dev": "npm run build && cd dist && web-ext run"
   },
   "repository": {
@@ -23,6 +23,8 @@
   "devDependencies": {
     "@types/node": "^10.12.18",
     "npm-run-all": "^4.1.5",
-    "typescript": "^3.2.2"
+    "typescript": "^3.2.2",
+    "webpack": "^4.29.0",
+    "webpack-cli": "^3.2.1"
   }
 }

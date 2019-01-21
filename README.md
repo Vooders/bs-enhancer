@@ -3,9 +3,9 @@ Now a browser extension
 Enhance BattleScribe HTML output.
 
 ### Requirements
-Install Browserify and web-ext(for firefox)
+web-ext is required to run in dev mode. This will start and load the extension into a firefox window. 
 
-`npm install --global web-ext browserify`
+`npm install --global web-ext`
 
 #### Install
 `npm install`
