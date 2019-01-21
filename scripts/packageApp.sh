@@ -5,4 +5,3 @@ rm -rf dist
 mkdir dist
 cp -r assets/* dist
 cp -r config ts/config
-browserify ts/start.js > dist/enhance.js
