@@ -12,8 +12,7 @@
     "dev": "npm run build && cd dist && web-ext run",
     "test": "npm run compile && karma start karma.config.js",
     "posttest": "rm -rf ts",
-    "karma": "karma start karma.config.js",
-    "run-tests": "./scripts/test-with-coverage.sh"
+    "karma": "karma start karma.config.js"
   },
   "repository": {
     "type": "git",
