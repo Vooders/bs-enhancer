@@ -13,5 +13,5 @@ units.createNavMenu()
 units.createModals()
 units.hideModelEquipment()
 
-const rules = new Rules()
+const rules = new Rules(document)
 rules.buildModals()

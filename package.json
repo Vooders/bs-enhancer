@@ -10,9 +10,8 @@
     "package": "./scripts/packageApp.sh",
     "postpackage": "webpack && rm -rf ts",
     "dev": "npm run build && cd dist && web-ext run",
-    "test": "npm run compile && karma start karma.config.js",
-    "posttest": "rm -rf ts",
-    "karma": "karma start karma.config.js"
+    "test": "tsc && karma start karma.config.js",
+    "posttest": "rm -rf ts"
   },
   "repository": {
     "type": "git",
@@ -34,8 +33,11 @@
     "babel-loader": "^8.0.5",
     "chai": "^4.2.0",
     "karma": "^3.1.4",
+    "karma-chai": "^0.1.0",
     "karma-chrome-launcher": "^2.2.0",
+    "karma-coverage": "^1.1.2",
     "karma-firefox-launcher": "^1.1.0",
+    "karma-html": "^1.0.5",
     "karma-mocha": "^1.3.0",
     "karma-spec-reporter": "0.0.32",
     "karma-webpack": "^3.0.5",

@@ -9,22 +9,24 @@ type RuleGroup = {
   [key: string]: Rule[]
 }
 export class Rules {
-  private readonly rules: RuleGroup = {}
+  private readonly ruleGroups: RuleGroup = {}
 
-  constructor () {
+  constructor (
+    private readonly document: Document
+  ) {
     this.getRules()
   }
 
-  logRules () {
-    console.log(this.rules)
+  getRuleGroupNames (): string[] {
+    return Object.keys(this.ruleGroups)
   }
 
   buildModals () {
-    const ruleTypes = Object.keys(this.rules)
+    const ruleTypes = Object.keys(this.ruleGroups)
     ruleTypes.forEach((ruleType) => {
       const navList = Nav.newNavList(`${this.makeId(ruleType)}-nav`, ruleType)
-      this.rules[ruleType].forEach((rule) => {
-        const li = document.createElement("li")
+      this.ruleGroups[ruleType].forEach((rule) => {
+        const li = this.document.createElement("li")
         li.setAttribute('class','nav-item')
         const triggerButton = Modal.create(rule.html, this.makeId(rule.name), rule.name)
         triggerButton.setAttribute('class', 'btn btn-dark nav-button')
@@ -39,15 +41,15 @@ export class Rules {
   }
 
   private getRules () {
-    const ruleSets = document.getElementsByClassName('summary')
+    const ruleSets = this.document.getElementsByClassName('summary')
     for (let i = 0; i < ruleSets.length; i++) {
       const ruleSet: any = ruleSets.item(i)
       const rules = ruleSet.getElementsByTagName('p')
       const ruleSetName = ruleSet.firstElementChild.innerText
-      this.rules[ruleSetName] = []
+      this.ruleGroups[ruleSetName] = []
       for (let k = 0; k < rules.length; k++) {
         const rule = rules[k]
-        this.rules[ruleSetName].push({
+        this.ruleGroups[ruleSetName].push({
           name: rule.firstElementChild.innerHTML.replace(/:/g, ''),
           html: rule
         })

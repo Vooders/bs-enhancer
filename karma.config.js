@@ -1,48 +1,48 @@
-const path = require("path")
-
-const webpackTestConfig = {
-  output: {
-    path: path.resolve(__dirname, 'tests'),
-    filename: 'tests.js'
-  },
-  node: {
-    fs: 'empty'
-  },
-  mode: 'production'
-}
-
-const files = [ 
-  './ts/test/TestConfiguration.js'
- ]
-
-const preprocessors = {
-  "./ts/test/TestConfiguration.js": ["webpack"]
-}
-
-const karmaWebpackConfig = Object.assign({}, webpackTestConfig, {
-  mode: "development",
-  module: {
-    rules: [
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        loaders: ["babel-loader"]
-      }
-    ]
-  },
-  optimization: {},
-  devtool: 'inline-source-map'
-})
 module.exports = function (config) {
   const configuration = {
     singleRun: true,
-    webpack: karmaWebpackConfig,
+    webpack: {
+      node: {
+        fs: 'empty'
+      },
+      mode: "development",
+      module: {
+        rules: [
+          {
+            test: /\.js$/,
+            exclude: /node_modules/,
+            loaders: ["babel-loader"]
+          }
+        ]
+      },
+      optimization: {}
+    },
     webpackServer: { noInfo: true },
     basePath: "",
-    frameworks: ["mocha"],
-    files,
-    preprocessors,
-    reporters: ["spec"],
+    frameworks: ["mocha", "chai"],
+    files: [ 
+      './ts/test/TestConfiguration.js'
+    ],
+    preprocessors: {
+      "./ts/test/TestConfiguration.js": ["webpack"],
+      "ts/src/**/*.js": "coverage"
+    },
+    coverageReporter: {
+      type : 'text-summary',
+      dir : 'coverage/',
+      includeAllSources : true
+    },
+    reporters: [
+      "spec",
+      "karmaHTML"
+    ],
+    client: {
+      karmaHTML: {
+        source: [
+          {src:'./test/testData.html', tag:'index'},
+        ]
+      }
+    },
     specReporter: {
       maxLogLines: 5,
       suppressErrorSummary: true,
