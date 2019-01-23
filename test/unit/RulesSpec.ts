@@ -4,6 +4,8 @@ describe ('Rules', () => {
   verify.it('should get all rules from the document', () => {
     const rules = new Rules()
     rules.logRules()
+    const one = 1
+    one.should.eql(2)
   })
 })
 

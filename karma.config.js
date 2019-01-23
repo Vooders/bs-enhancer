@@ -1,22 +1,32 @@
-const mainWebpackConfig = require("./webpack.config.js")
+// const mainWebpackConfig = require("./webpack.config.js")
 const path = require("path")
 
-const testConfigPath = "./ts/test/TestConfiguration.js"
-
-const files = [testConfigPath]
-
-const preprocessors = {
-  testConfigPath: ["webpack"]
+const wc = {
+  output: {
+    path: path.resolve(__dirname, 'tests'),
+    filename: 'tests.js'
+  },
+  node: {
+    fs: 'empty'
+  },
+  mode: 'production'
 }
 
-const karmaWebpackConfig = Object.assign({}, mainWebpackConfig, {
+const files = [ 
+  './ts/test/TestConfiguration.js'
+ ]
+
+const preprocessors = {
+  "./ts/test/TestConfiguration.js": ["webpack"]
+}
+
+const karmaWebpackConfig = Object.assign({}, wc, {
   mode: "development",
   module: {
     rules: [
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        include: /test/,
         loaders: ["babel-loader"]
       }
     ]
@@ -24,8 +34,8 @@ const karmaWebpackConfig = Object.assign({}, mainWebpackConfig, {
   optimization: {},
   devtool: 'inline-source-map'
 })
-
-module.exports = function karmaConfig(config) {
+console.log('conf -->',karmaWebpackConfig)
+module.exports = function (config) {
   const configuration = {
     singleRun: true,
     webpack: karmaWebpackConfig,
