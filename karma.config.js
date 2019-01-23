@@ -1,7 +1,6 @@
-// const mainWebpackConfig = require("./webpack.config.js")
 const path = require("path")
 
-const wc = {
+const webpackTestConfig = {
   output: {
     path: path.resolve(__dirname, 'tests'),
     filename: 'tests.js'
@@ -20,7 +19,7 @@ const preprocessors = {
   "./ts/test/TestConfiguration.js": ["webpack"]
 }
 
-const karmaWebpackConfig = Object.assign({}, wc, {
+const karmaWebpackConfig = Object.assign({}, webpackTestConfig, {
   mode: "development",
   module: {
     rules: [
@@ -34,7 +33,6 @@ const karmaWebpackConfig = Object.assign({}, wc, {
   optimization: {},
   devtool: 'inline-source-map'
 })
-console.log('conf -->',karmaWebpackConfig)
 module.exports = function (config) {
   const configuration = {
     singleRun: true,
@@ -44,20 +42,23 @@ module.exports = function (config) {
     frameworks: ["mocha"],
     files,
     preprocessors,
-    reporters: ["spec"], // This line is extra important, it enabled the green checkmarks in the specs
+    reporters: ["spec"],
     specReporter: {
-      maxLogLines: 5, // limit number of lines logged per test
-      suppressErrorSummary: true, // do not print error summary
-      suppressFailed: false, // print information about failed tests
-      suppressPassed: false, //  print information about passed tests
-      suppressSkipped: false, // print information about skipped tests
-      showSpecTiming: true // print the time elapsed for each spec
+      maxLogLines: 5,
+      suppressErrorSummary: true,
+      suppressFailed: false,
+      suppressPassed: false,
+      suppressSkipped: false,
+      showSpecTiming: true
     },
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: false,
-    browsers: ["ChromeHeadless"],
+    browsers: [
+      "ChromeHeadless",
+      "FirefoxHeadless"
+    ],
     customLaunchers: {
       Chrome_travis_ci: {
         base: "Chrome",

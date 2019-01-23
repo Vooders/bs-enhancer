@@ -5,7 +5,7 @@ describe ('Rules', () => {
     const rules = new Rules()
     rules.logRules()
     const one = 1
-    one.should.eql(2)
+    one.should.eql(1)
   })
 })
 
