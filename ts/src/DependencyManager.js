@@ -1,0 +1,31 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const config = require('../config/dependencies.json');
+const body = document.getElementsByClassName('battlescribe')[1];
+const head = document.getElementsByTagName('head')[0];
+class DependencyManager {
+    loadDependencies() {
+        config.css.forEach((script) => {
+            const css = document.createElement('link');
+            css.setAttribute('rel', 'stylesheet');
+            css.setAttribute('type', 'text/css');
+            css.setAttribute('href', script.url);
+            css.setAttribute('media', 'all');
+            head.appendChild(css);
+        });
+        let promise = Promise.resolve();
+        const intervalBetweenScriptLoads = 200;
+        config.js.forEach((script) => {
+            promise = promise.then(function () {
+                const element = document.createElement('script');
+                element.setAttribute('src', script.url);
+                body.appendChild(element);
+                return new Promise(function (resolve) {
+                    setTimeout(resolve, intervalBetweenScriptLoads);
+                });
+            });
+        });
+    }
+}
+exports.DependencyManager = DependencyManager;
+//# sourceMappingURL=DependencyManager.js.map

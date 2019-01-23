@@ -13,6 +13,9 @@ export class Rules {
 
   constructor () {
     this.getRules()
+  }
+
+  logRules () {
     console.log(this.rules)
   }
 
