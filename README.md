@@ -13,6 +13,9 @@ You can also activate developer mode in Chrome and load the `dist` dir using the
 #### Install dependencies
 `npm install`
 
+#### Run the tests
+`npm test`
+
 #### Build
 `npm run build`
 
