@@ -9,21 +9,27 @@ type Unit = {
 
 export class Units {
   private units: Unit[] = []
+  private readonly nav: Nav
+  private readonly modal: Modal
 
-  constructor () {
+  constructor (
+    private readonly document: Document
+    ) {
+    this.nav = new Nav(this.document)
+    this.modal = new Modal(this.document)
     this.setIds()
   }
 
   createNavMenu (): void {
     const menuId = 'nav-menu'
     const menuTitle = 'Units'
-    const menu = Nav.newNavList(menuId, menuTitle)
+    const menu = this.nav.newNavList(menuId, menuTitle)
     this.units.forEach((unit) => {
-      const li = document.createElement("li")
+      const li = this.document.createElement("li")
       li.setAttribute('class','nav-item')
       
-      const link = document.createElement('a')
-      const linkText = document.createTextNode(unit.name)
+      const link = this.document.createElement('a')
+      const linkText = this.document.createTextNode(unit.name)
       link.appendChild(linkText)
       link.setAttribute('href', '#' + unit.id)
       link.setAttribute('title', unit.name)
@@ -36,8 +42,8 @@ export class Units {
 
   createModals (): void {
     this.getUnitIds().forEach((unitId: string) => {
-      const element: any = document.getElementById(unitId)
-      const button = Modal.create(element, unitId, '+')
+      const element: any = this.document.getElementById(unitId)
+      const button = this.modal.create(element, unitId, '+')
       button.setAttribute('class', 'btn btn-dark unit-button')
       element.insertBefore(button, element.firstElementChild)
     })
@@ -45,7 +51,7 @@ export class Units {
 
   hideModelEquipment (): void {
     this.getUnitIds().forEach((unitId: string) => {
-      const unit: any = document.getElementById(unitId)
+      const unit: any = this.document.getElementById(unitId)
       const equipment: any = unit.querySelector('ul')
       if (equipment) {
         const revealButton = ElementTools.hide(equipment, unitId, 'Show Weapon Selection')
@@ -56,7 +62,7 @@ export class Units {
   }
 
   private setIds (): void {
-    const categories: HTMLCollection = document.getElementsByClassName('category')
+    const categories: HTMLCollection = this.document.getElementsByClassName('category')
     for (let i = 0; i < categories.length; i++) {
       const units: HTMLCollection = categories.item(i)!.getElementsByClassName('rootselection')
       for (let k=0; k<units.length; k++) {
@@ -64,7 +70,6 @@ export class Units {
         const name = unitElement.innerText.split('\n')[0].split('[')[0].trim()
         const correctedName = this.setUniqueName(name)
         const unit = this.addUnit(correctedName)
-        console.log(unitElement)
         const nameElement = unitElement.querySelector('h4')
         if (nameElement) {
           nameElement.innerText = nameElement.innerText.replace(name, correctedName)

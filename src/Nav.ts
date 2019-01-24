@@ -1,26 +1,30 @@
-const body: Element = document.getElementsByClassName('battlescribe')[1]
-
 export class Nav {
-  static init (): void {
-    const div = document.createElement("div")
-    div.id = 'nav'
-    body.appendChild(div)
+  constructor (
+    private readonly document: Document
+  ) {
+    const body: Element = this.document.getElementsByClassName('battlescribe')[1]
+
+    if (!this.document.getElementById('nav')) {
+      const div = this.document.createElement("div")
+      div.id = 'nav'
+      body.appendChild(div)
+    }
   }
 
-  static newNavList (id: string, title:string): HTMLUListElement {
-    const div = document.createElement('div')
+  newNavList (id: string, title:string): HTMLUListElement {
+    const div = this.document.createElement('div')
     div.setAttribute('class', 'nav-menu')
     if (title) {
-      const heading = document.createElement('h3')
-      const text = document.createTextNode(title)
+      const heading = this.document.createElement('h3')
+      const text = this.document.createTextNode(title)
       heading.appendChild(text)
       div.appendChild(heading)
     }  
-    const navList = document.createElement("ul")
+    const navList = this.document.createElement("ul")
     navList.setAttribute('id', id)
     navList.setAttribute('class',`nav flex-column`)
     div.appendChild(navList)
-    document.getElementById('nav')!.appendChild(div)
+    this.document.getElementById('nav')!.appendChild(div)
     return navList
   }
 }

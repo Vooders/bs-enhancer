@@ -10,25 +10,39 @@ type RuleGroup = {
 }
 export class Rules {
   private readonly ruleGroups: RuleGroup = {}
-
+  private readonly nav: Nav
+  private readonly modal: Modal
+  
   constructor (
     private readonly document: Document
-  ) {
-    this.getRules()
+    ) {
+    this.nav = new Nav(this.document)
+    this.modal = new Modal(this.document)
+    this.populateRules()
   }
 
   getRuleGroupNames (): string[] {
     return Object.keys(this.ruleGroups)
   }
 
+  getRules (): Rule[] {
+    const results: Rule[] = []
+    this.getRuleGroupNames().forEach((ruleSet) => {
+      this.ruleGroups[ruleSet].forEach((rule: Rule) => {
+        results.push(rule)
+      })
+    })
+    return results
+  }
+
   buildModals () {
     const ruleTypes = Object.keys(this.ruleGroups)
     ruleTypes.forEach((ruleType) => {
-      const navList = Nav.newNavList(`${this.makeId(ruleType)}-nav`, ruleType)
+      const navList = this.nav.newNavList(`${this.makeId(ruleType)}-nav`, ruleType)
       this.ruleGroups[ruleType].forEach((rule) => {
         const li = this.document.createElement("li")
         li.setAttribute('class','nav-item')
-        const triggerButton = Modal.create(rule.html, this.makeId(rule.name), rule.name)
+        const triggerButton = this.modal.create(rule.html, this.makeId(rule.name), rule.name)
         triggerButton.setAttribute('class', 'btn btn-dark nav-button')
         li.appendChild(triggerButton)
         navList.appendChild(li)
@@ -40,7 +54,7 @@ export class Rules {
     return s.replace(/ /g, '_')
   }
 
-  private getRules () {
+  private populateRules () {
     const ruleSets = this.document.getElementsByClassName('summary')
     for (let i = 0; i < ruleSets.length; i++) {
       const ruleSet: any = ruleSets.item(i)
