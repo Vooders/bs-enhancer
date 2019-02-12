@@ -5,37 +5,32 @@ type Rule = {
   name: string,
   html: HTMLDivElement
 }
+
 type RuleGroup = {
   [key: string]: Rule[]
 }
+
 export class Rules {
   private readonly ruleGroups: RuleGroup = {}
   private readonly nav: Nav
   private readonly modal: Modal
+  private created: boolean = false
   
   constructor (
     private readonly document: Document
     ) {
     this.nav = new Nav(this.document)
     this.modal = new Modal(this.document)
-    this.populateRules()
   }
 
-  getRuleGroupNames (): string[] {
-    return Object.keys(this.ruleGroups)
+  create () {
+    if (!this.created) {
+      this.populateRules()
+      this.buildModals()
+    }
   }
 
-  getRules (): Rule[] {
-    const results: Rule[] = []
-    this.getRuleGroupNames().forEach((ruleSet) => {
-      this.ruleGroups[ruleSet].forEach((rule: Rule) => {
-        results.push(rule)
-      })
-    })
-    return results
-  }
-
-  buildModals () {
+  private buildModals () {
     const ruleTypes = Object.keys(this.ruleGroups)
     ruleTypes.forEach((ruleType) => {
       const navList = this.nav.newNavList(`${this.makeId(ruleType)}-nav`, ruleType)

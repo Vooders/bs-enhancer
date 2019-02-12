@@ -105,5 +105,3 @@ export class Units {
     return this.units.map((unit: Unit) => unit.id)
   }
 }
-
-

@@ -6,6 +6,7 @@ export class Modal {
   ) {
     this.body = this.document.getElementsByClassName('battlescribe')[1]
   }
+  
   create (html: HTMLDivElement, name: string, buttonText: string): HTMLButtonElement {
     const id = name + '_modal'
     const modal = this.document.createElement('div')
