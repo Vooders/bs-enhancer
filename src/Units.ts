@@ -22,42 +22,55 @@ export class Units {
   }
 
   createNavMenu (): void {
-    const menuId = 'nav-menu'
-    const menuTitle = 'Units'
-    const menu = this.nav.newNavList(menuId, menuTitle)
-    this.units.forEach((unit) => {
-      const li = this.document.createElement("li")
-      li.setAttribute('class','nav-item')
-      
-      const link = this.document.createElement('a')
-      const linkText = this.document.createTextNode(unit.name)
-      link.appendChild(linkText)
-      link.setAttribute('href', '#' + unit.id)
-      link.setAttribute('title', unit.name)
-      link.setAttribute('type', 'button')
-      link.setAttribute('class', 'btn btn-dark nav-button')
-      li.appendChild(link)
-      menu.appendChild(li)
+    const menuTitles = ['Units', 'Grave']
+    let hide = false
+    menuTitles.forEach((title) => {
+      const menuId = `${title.toLowerCase()}-menu`
+      const menu = this.nav.newNavList(menuId, title)
+      this.units.forEach((unit) => {
+        const li = this.document.createElement("li")
+        li.setAttribute('class',`nav-item ${(hide) ? 'd-none' : ''}`)
+        li.setAttribute('id', `${menuId}-${unit.id}`)
+        
+        const link = this.document.createElement('a')
+        const linkText = this.document.createTextNode(unit.name)
+        link.appendChild(linkText)
+        link.setAttribute('href', '#' + unit.id)
+        link.setAttribute('title', unit.name)
+        link.setAttribute('type', 'button')
+        link.setAttribute('class', 'btn btn-dark nav-button')
+        li.appendChild(link)
+        menu.appendChild(li)
+      })
+      hide = true
     })
   }
 
   createDeathButtons (): void {
+    const deathIcon = '💀'
+    const resIcon = '❤️'
     const markDead = (id: string) => {
-      console.log('hellllo')
-      const classString = this.document.getElementById(id)!.getAttribute('class')
-      const cssClass = 'dead'
-      const newClass = (classString && classString.includes(cssClass)) ? classString.replace(cssClass, '') : `${classString} ${cssClass}`
-      this.document.getElementById(id)!.setAttribute('class', newClass)
+      const element = this.document.getElementById(id)
+      const live = this.document.getElementById(`units-menu-${id}`)
+      const dead = this.document.getElementById(`grave-menu-${id}`)
+      const modal = this.document.getElementById(`${id}_modal`)!.firstElementChild!.firstElementChild
+      const deathButton = this.document.getElementById(`${id}-death-button`)
+      deathButton!.firstChild!.nodeValue = (deathButton!.firstChild!.nodeValue === deathIcon) ? resIcon : deathIcon
+      ElementTools.toggleClass(element as any, 'dead')
+      ElementTools.toggleClass(modal as any, 'dead')
+      ElementTools.toggleClass(live as any, 'd-none')
+      ElementTools.toggleClass(dead as any, 'd-none')
     }
 
     this.getUnitIds().forEach((unitId: string) => {
       const element: any = this.document.getElementById(unitId)
       const button = this.document.createElement('button')
-      const linkText = this.document.createTextNode('💀')
+      const linkText = this.document.createTextNode(deathIcon)
 
       button.appendChild(linkText)
       button.addEventListener("click", function(){ markDead(unitId) })
-      button.setAttribute('class', 'btn btn-dark unit-button')
+      button.setAttribute('id', `${unitId}-death-button`)
+      button.setAttribute('class', 'btn btn-dark deathButton')
       element.insertBefore(button, element.firstElementChild)
     })
   }

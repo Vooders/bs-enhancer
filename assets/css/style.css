@@ -7,7 +7,14 @@ p, h1, h2, h3, h4, h5, h6, td, th, .modal-content {
 }
 
 .dead {
-  background-color: red;
+  background-color: #ffb3b3;
+  border: 2px solid red;
+}
+
+.deathButton {
+  font-size: 18px !important;
+  padding: 0.1rem 0.6rem;
+  margin-right: 5px;
 }
 
 #nav {

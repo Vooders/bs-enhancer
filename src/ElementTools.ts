@@ -12,4 +12,10 @@ export class ElementTools {
     revealButton.style.margin = '5px'
     return revealButton
   }
+
+  static toggleClass (element: HTMLElement, cssClass: string): void {
+    const classString = element.getAttribute('class')
+    const newClass = (classString && classString.includes(cssClass)) ? classString.replace(cssClass, '') : `${classString} ${cssClass}`
+    element.setAttribute('class', newClass)
+  }
 }
