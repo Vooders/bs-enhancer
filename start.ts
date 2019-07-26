@@ -9,5 +9,6 @@ rules.create()
 
 dependencyManager.loadDependencies()
 units.createNavMenu()
+units.createDeathButtons()
 units.createModals()
 units.hideModelEquipment()

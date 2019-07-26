@@ -11,7 +11,7 @@ export class Nav {
     }
   }
 
-  newNavList (id: string, title:string): HTMLUListElement {
+  newNavList (id: string, title?:string): HTMLUListElement {
     const div = this.document.createElement('div')
     div.setAttribute('class', 'nav-menu')
     if (title) {

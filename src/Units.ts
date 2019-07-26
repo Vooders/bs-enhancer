@@ -1,6 +1,7 @@
 import { Nav } from './Nav'
 import { Modal } from './Modal'
 import { ElementTools } from './ElementTools'
+// import { Functions } from './Functions'
 
 type Unit = {
   readonly name: string,
@@ -14,7 +15,7 @@ export class Units {
 
   constructor (
     private readonly document: Document
-    ) {
+  ) {
     this.nav = new Nav(this.document)
     this.modal = new Modal(this.document)
     this.setIds()
@@ -37,6 +38,27 @@ export class Units {
       link.setAttribute('class', 'btn btn-dark nav-button')
       li.appendChild(link)
       menu.appendChild(li)
+    })
+  }
+
+  createDeathButtons (): void {
+    const markDead = (id: string) => {
+      console.log('hellllo')
+      const classString = this.document.getElementById(id)!.getAttribute('class')
+      const cssClass = 'dead'
+      const newClass = (classString && classString.includes(cssClass)) ? classString.replace(cssClass, '') : `${classString} ${cssClass}`
+      this.document.getElementById(id)!.setAttribute('class', newClass)
+    }
+
+    this.getUnitIds().forEach((unitId: string) => {
+      const element: any = this.document.getElementById(unitId)
+      const button = this.document.createElement('button')
+      const linkText = this.document.createTextNode('💀')
+
+      button.appendChild(linkText)
+      button.addEventListener("click", function(){ markDead(unitId) })
+      button.setAttribute('class', 'btn btn-dark unit-button')
+      element.insertBefore(button, element.firstElementChild)
     })
   }
 

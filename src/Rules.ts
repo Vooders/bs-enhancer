@@ -18,7 +18,7 @@ export class Rules {
   
   constructor (
     private readonly document: Document
-    ) {
+  ) {
     this.nav = new Nav(this.document)
     this.modal = new Modal(this.document)
   }
