@@ -18,4 +18,14 @@ export class ElementTools {
     const newClass = (classString && classString.includes(cssClass)) ? classString.replace(cssClass, '') : `${classString} ${cssClass}`
     element.setAttribute('class', newClass)
   }
+
+  static createButton (id: string, buttonText: string, listener: Function, args: any[] = []): HTMLButtonElement {
+    const button = document.createElement('button')
+    const linkText = document.createTextNode(buttonText)
+    button.appendChild(linkText)
+    button.setAttribute('id', id)
+    button.setAttribute('class', 'btn btn-dark deathButton')
+    button.addEventListener("click", () => { listener(...args) })
+    return button
+  }
 }

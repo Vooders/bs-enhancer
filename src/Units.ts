@@ -1,7 +1,6 @@
 import { Nav } from './Nav'
 import { Modal } from './Modal'
 import { ElementTools } from './ElementTools'
-// import { Functions } from './Functions'
 
 type Unit = {
   readonly name: string,
@@ -53,7 +52,7 @@ export class Units {
       const element = this.document.getElementById(id)
       const live = this.document.getElementById(`units-menu-${id}`)
       const dead = this.document.getElementById(`grave-menu-${id}`)
-      const modal = this.document.getElementById(`${id}_modal`)!.firstElementChild!.firstElementChild
+      const modal = this.document.getElementById(`${id}_modal`)!.getElementsByClassName('modal-content')[0]
       const deathButton = this.document.getElementById(`${id}-death-button`)
       deathButton!.firstChild!.nodeValue = (deathButton!.firstChild!.nodeValue === deathIcon) ? resIcon : deathIcon
       ElementTools.toggleClass(element as any, 'dead')
@@ -64,13 +63,7 @@ export class Units {
 
     this.getUnitIds().forEach((unitId: string) => {
       const element: any = this.document.getElementById(unitId)
-      const button = this.document.createElement('button')
-      const linkText = this.document.createTextNode(deathIcon)
-
-      button.appendChild(linkText)
-      button.addEventListener("click", function(){ markDead(unitId) })
-      button.setAttribute('id', `${unitId}-death-button`)
-      button.setAttribute('class', 'btn btn-dark deathButton')
+      const button = ElementTools.createButton(`${unitId}-death-button`, deathIcon, markDead, [unitId])
       element.insertBefore(button, element.firstElementChild)
     })
   }
