@@ -49,27 +49,26 @@ export class Units {
     const deathIcon = '💀'
     const resIcon = '❤️'
     const markDead = (id: string) => {
-      const element = this.document.getElementById(id)
-      const live = this.document.getElementById(`units-menu-${id}`)
-      const dead = this.document.getElementById(`grave-menu-${id}`)
-      const modal = this.document.getElementById(`${id}_modal`)!.getElementsByClassName('modal-content')[0]
-      const deathButton = this.document.getElementById(`${id}-death-button`)
-      deathButton!.firstChild!.nodeValue = (deathButton!.firstChild!.nodeValue === deathIcon) ? resIcon : deathIcon
-      ElementTools.toggleClass(element as any, 'dead')
-      ElementTools.toggleClass(modal as any, 'dead')
-      ElementTools.toggleClass(live as any, 'd-none')
-      ElementTools.toggleClass(dead as any, 'd-none')
+      const user: any = this.document.getElementById(id)
+      const live: any = this.document.getElementById(`units-menu-${id}`)
+      const dead: any = this.document.getElementById(`grave-menu-${id}`)
+      const modal: any = this.document.getElementById(`${id}_modal`)!.getElementsByClassName('modal-content')[0]
+      const deathButton: any = this.document.getElementById(`${id}-death-button`)!.firstChild
+      deathButton!.nodeValue = (deathButton!.nodeValue === deathIcon) ? resIcon : deathIcon
+      ElementTools.toggleClass(user, 'dead')
+      ElementTools.toggleClass(modal, 'dead')
+      ElementTools.toggleClass(live, 'd-none')
+      ElementTools.toggleClass(dead, 'd-none')
     }
 
     this.getUnitIds().forEach((unitId: string) => {
-      const buttonAttributes: ElementTools.ButtonConfig = {
+      const user: any = this.document.getElementById(unitId)
+      const button = ElementTools.createButton({
         id: `${unitId}-death-button`,
         text: deathIcon,
         class: 'deathButton'
-      }
-      const element: any = this.document.getElementById(unitId)
-      const button = ElementTools.createButton(buttonAttributes, markDead, [unitId])
-      element.insertBefore(button, element.firstElementChild)
+      }, markDead, [unitId])
+      user.insertBefore(button, user.firstElementChild)
     })
   }
 
