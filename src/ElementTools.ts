@@ -19,13 +19,21 @@ export class ElementTools {
     element.setAttribute('class', newClass)
   }
 
-  static createButton (id: string, buttonText: string, listener: Function, args: any[] = []): HTMLButtonElement {
+  static createButton (config: ElementTools.ButtonConfig, listener: Function, args: any[] = []): HTMLButtonElement {
     const button = document.createElement('button')
-    const linkText = document.createTextNode(buttonText)
+    const linkText = document.createTextNode(config.text)
     button.appendChild(linkText)
-    button.setAttribute('id', id)
-    button.setAttribute('class', 'btn btn-dark deathButton')
+    button.setAttribute('id', config.id)
+    button.setAttribute('class', `btn btn-dark ${config.class}`)
     button.addEventListener("click", () => { listener(...args) })
     return button
+  }
+}
+
+export namespace ElementTools {
+  export type ButtonConfig = {
+    id: string,
+    text: string,
+    class?: string
   }
 }

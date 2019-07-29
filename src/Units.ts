@@ -62,8 +62,13 @@ export class Units {
     }
 
     this.getUnitIds().forEach((unitId: string) => {
+      const buttonAttributes: ElementTools.ButtonConfig = {
+        id: `${unitId}-death-button`,
+        text: deathIcon,
+        class: 'deathButton'
+      }
       const element: any = this.document.getElementById(unitId)
-      const button = ElementTools.createButton(`${unitId}-death-button`, deathIcon, markDead, [unitId])
+      const button = ElementTools.createButton(buttonAttributes, markDead, [unitId])
       element.insertBefore(button, element.firstElementChild)
     })
   }
