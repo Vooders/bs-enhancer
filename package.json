@@ -33,7 +33,7 @@
     "@types/webpack-env": "^1.13.6",
     "babel-loader": "^8.0.5",
     "chai": "^4.2.0",
-    "karma": "^3.1.4",
+    "karma": "^6.4.1",
     "karma-chai": "^0.1.0",
     "karma-chrome-launcher": "^2.2.0",
     "karma-coverage": "^1.1.2",
